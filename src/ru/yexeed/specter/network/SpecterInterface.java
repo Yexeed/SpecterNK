@@ -12,12 +12,11 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class SpecterInterface implements AdvancedSourceInterface {
     private final Specter specter;
-    private Network network;
     private final HashMap<InetSocketAddress, SpecterNetworkSession> sessions = new HashMap<>();
+    private Network network;
     private long offset = 1;
 
     public SpecterInterface(Specter specter) {
@@ -90,7 +89,7 @@ public class SpecterInterface implements AdvancedSourceInterface {
 
     }
 
-    public void open(String name){
+    public void open(String name) {
         var session = new SpecterNetworkSession(null, this.specter);
         InetSocketAddress address;
         try {
@@ -106,11 +105,10 @@ public class SpecterInterface implements AdvancedSourceInterface {
         player.startPreLogin();
     }
 
-    public Player getSessionByName(String name) {
+    public SpecterNetworkSession getSessionByName(String name) {
         return this.sessions.values().stream()
-                .map(SpecterNetworkSession::getPlayer)
-                .filter(Objects::nonNull)
-                .filter(player -> player.getName().toLowerCase().equals(name))
+                .filter(session -> session.getPlayer() != null)
+                .filter(session -> session.getPlayer().getName().toLowerCase().equals(name))
                 .findFirst()
                 .orElse(null);
     }

@@ -15,12 +15,13 @@ import java.util.Arrays;
 
 public class SpecterPlayer extends Player {
     private static final Skin WHITE_SKIN;
-    static{
-       WHITE_SKIN = new Skin();
-       byte[] bytes = new byte[64*64*4];
-       Arrays.fill(bytes, (byte) 0xFF);
-       WHITE_SKIN.setSkinData(bytes);
-       WHITE_SKIN.setSkinId("Standard_Steve");
+
+    static {
+        WHITE_SKIN = new Skin();
+        byte[] bytes = new byte[64 * 64 * 4];
+        Arrays.fill(bytes, (byte) 0xFF);
+        WHITE_SKIN.setSkinData(bytes);
+        WHITE_SKIN.setSkinId("Standard_Steve");
     }
 
     public SpecterPlayer(SourceInterface interfaz, Long clientID, InetSocketAddress socketAddress) {
@@ -38,16 +39,16 @@ public class SpecterPlayer extends Player {
         super.close();
     }
 
-    public void startPreLogin(){
+    public void startPreLogin() {
         this.processPreLogin();
 //        this.completeLoginSequence();
     }
 
-    public void doFirstSpawn0(){
+    public void doFirstSpawn0() {
         this.doFirstSpawn();
     }
 
-    public void setupFakeData(String name, long  offset) {
+    public void setupFakeData(String name, long offset) {
         this.username = name;
         this.loginPacketReceived = true;
         this.protocol = ProtocolInfo.CURRENT_PROTOCOL;
@@ -56,9 +57,9 @@ public class SpecterPlayer extends Player {
         this.displayName = username;
         this.setDataProperty(new StringEntityData(DATA_NAMETAG, this.username), false);
         this.randomClientId = offset;
-        try{
+        try {
             this.uuid = Specter.generateUUIDFromString(name);
-        }catch (Exception e){
+        } catch (Exception e) {
             this.getServer().getLogger().log(LogLevel.EMERGENCY, "Failed to generate UUID for " + name, e);
             this.close();
             return;

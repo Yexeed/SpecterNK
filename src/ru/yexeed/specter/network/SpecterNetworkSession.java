@@ -13,7 +13,7 @@ public class SpecterNetworkSession implements NetworkPlayerSession {
     @Getter
     @Setter
     private SpecterPlayer player;
-    private Specter specter;
+    private final Specter specter;
 
     public SpecterNetworkSession(SpecterPlayer player, Specter owner) {
         this.player = player;
@@ -22,7 +22,7 @@ public class SpecterNetworkSession implements NetworkPlayerSession {
 
     @Override
     public void sendPacket(DataPacket packet) {
-        switch(packet.packetId()){
+        switch (packet.packetId()) {
             case ProtocolInfo.RESOURCE_PACKS_INFO_PACKET:
                 var pk = new ResourcePackClientResponsePacket();
                 pk.responseStatus = ResourcePackClientResponsePacket.STATUS_COMPLETED;
@@ -31,7 +31,7 @@ public class SpecterNetworkSession implements NetworkPlayerSession {
                 break;
             case ProtocolInfo.PLAY_STATUS_PACKET:
                 PlayStatusPacket playStatusPacket = (PlayStatusPacket) packet;
-                if(playStatusPacket.status == PlayStatusPacket.PLAYER_SPAWN){
+                if (playStatusPacket.status == PlayStatusPacket.PLAYER_SPAWN) {
                     this.player.doFirstSpawn0();
                     this.specter.getLogger().info(TextFormat.LIGHT_PURPLE + "[" + this.getPlayer().getName() + "] Spawned");
                 }
@@ -39,20 +39,21 @@ public class SpecterNetworkSession implements NetworkPlayerSession {
             case ProtocolInfo.TEXT_PACKET:
                 TextPacket textPacket = (TextPacket) packet;
                 var type = "Unknown";
-                switch(textPacket.type){
+                switch (textPacket.type) {
                     case TextPacket.TYPE_CHAT -> type = "Chat";
                     case TextPacket.TYPE_RAW -> type = "Message";
                     case TextPacket.TYPE_POPUP -> type = "Popup";
                     case TextPacket.TYPE_SYSTEM -> type = "System";
                     case TextPacket.TYPE_TIP -> type = "Tip";
-                    case TextPacket.TYPE_TRANSLATION -> type = "Translation (with params: " + String.join(", ", textPacket.parameters) + ")";
+                    case TextPacket.TYPE_TRANSLATION ->
+                            type = "Translation (with params: " + String.join(", ", textPacket.parameters) + ")";
                 }
                 this.specter.getLogger().info(TextFormat.LIGHT_PURPLE + "[" + this.getPlayer().getName() + "] " + type + ": " + textPacket.message);
                 break;
             case ProtocolInfo.SET_TITLE_PACKET:
                 SetTitlePacket setTitlePacket = (SetTitlePacket) packet;
                 type = "Unknown";
-                switch(setTitlePacket.type){
+                switch (setTitlePacket.type) {
                     case SetTitlePacket.TYPE_TITLE -> type = "Title";
                     case SetTitlePacket.TYPE_SUBTITLE -> type = "Subtitle";
                     case SetTitlePacket.TYPE_ACTIONBAR_JSON -> type = "Action bar";
@@ -73,13 +74,13 @@ public class SpecterNetworkSession implements NetworkPlayerSession {
     }
 
     @Override
-    public void setCompression(CompressionProvider compression) {
-
+    public CompressionProvider getCompression() {
+        return null;
     }
 
     @Override
-    public CompressionProvider getCompression() {
-        return null;
+    public void setCompression(CompressionProvider compression) {
+
     }
 
 }

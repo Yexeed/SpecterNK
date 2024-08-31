@@ -4,7 +4,7 @@ version: 1.0
 api-version: "1.0.0"
 commands:
   specter:
-    aliases: [s]
+    aliases: [ s ]
     usage: /specter <action> <player> [params]
     permission: specter.command
 permissions:
