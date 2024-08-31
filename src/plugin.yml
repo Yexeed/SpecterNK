@@ -1,0 +1,12 @@
+name: Specter
+main: ru.yexeed.specter.Specter
+version: 1.0
+api-version: "1.0.0"
+commands:
+  specter:
+    aliases: [s]
+    usage: /specter <action> <player> [params]
+    permission: specter.command
+permissions:
+  specter.command:
+    default: op
