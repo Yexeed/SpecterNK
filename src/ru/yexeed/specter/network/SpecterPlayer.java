@@ -33,15 +33,8 @@ public class SpecterPlayer extends Player {
         return (SpecterNetworkSession) super.getNetworkSession();
     }
 
-    @Override
-    public void close() {
-        this.getServer().getLogger().log(LogLevel.EMERGENCY, "A", new Exception("A"));
-        super.close();
-    }
-
     public void startPreLogin() {
         this.processPreLogin();
-//        this.completeLoginSequence();
     }
 
     public void doFirstSpawn0() {

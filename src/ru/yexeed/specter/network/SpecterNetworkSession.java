@@ -27,7 +27,7 @@ public class SpecterNetworkSession implements NetworkPlayerSession {
                 var pk = new ResourcePackClientResponsePacket();
                 pk.responseStatus = ResourcePackClientResponsePacket.STATUS_COMPLETED;
                 this.player.handleDataPacket(pk);
-                this.specter.getLogger().info(TextFormat.LIGHT_PURPLE + "[" + this.getPlayer().getName() + "] Resource packs completed");
+                this.specter.getLogger().info(TextFormat.LIGHT_PURPLE + "[" + this.getPlayer().getName() + "] Resource packs completed (uuid of specter: " + this.getPlayer().getUniqueId().toString() + ")");
                 break;
             case ProtocolInfo.PLAY_STATUS_PACKET:
                 PlayStatusPacket playStatusPacket = (PlayStatusPacket) packet;
